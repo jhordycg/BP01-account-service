@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Document
@@ -15,6 +15,6 @@ public class Account {
     private String customerId;
     private String productId;
     private Double balance;
-    private Date enrolled = new Date();
+    private LocalDate enrolled = LocalDate.now();
     private Integer movements;
 }

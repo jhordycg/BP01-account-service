@@ -18,6 +18,12 @@ public class AccountController {
     private final ModelMapper mapper;
 
     @GetMapping
+    public Flux<AccountDto> findAll() {
+        return service.findAll()
+                .mapNotNull(account -> mapper.map(account, AccountDto.class));
+    }
+
+    @GetMapping("/")
     public Flux<AccountDto> findAllByCustomerIdAndProductId(
             @RequestParam("customerId") String customerId,
             @RequestParam("productId") String productId
