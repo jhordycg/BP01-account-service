@@ -1,6 +1,7 @@
 package com.bootcamp.account.controller;
 
 import com.bootcamp.account.model.dao.Account;
+import com.bootcamp.account.model.dao.MovementType;
 import com.bootcamp.account.model.dto.AccountDto;
 import com.bootcamp.account.service.AccountService;
 import lombok.RequiredArgsConstructor;
@@ -34,10 +35,21 @@ public class AccountController {
     @PutMapping("/{id}")
     public Mono<AccountDto> findByIdThenAddBalance(
             @PathVariable String id,
-            @RequestParam("mount") Double mount
+            @RequestParam("mount") Double mount,
+            @RequestParam("type") MovementType type
     ) {
-        return service.findByIdThenAddBalance(id, mount)
-                .mapNotNull(account -> mapper.map(account, AccountDto.class));
+        Mono<Account> editedAccount;
+        switch (type) {
+            case INCOME:
+                editedAccount = service.findByIdThenAddBalance(id, mount);
+                break;
+            case OUTCOME:
+                editedAccount = service.findByIdThenReduceBalance(id, mount);
+                break;
+            default:
+                return Mono.error(new Exception("Operation not allowed"));
+        }
+        return editedAccount.mapNotNull(account -> mapper.map(account, AccountDto.class));
     }
 
     @PostMapping

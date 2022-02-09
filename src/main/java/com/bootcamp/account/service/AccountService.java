@@ -11,4 +11,6 @@ public interface AccountService {
     Flux<Account> findAllByCustomerIdAndProductId(String customerId, String productId);
     Mono<Account> create(Account account);
     Mono<Void> delete(String id);
+
+    Mono<Account> findByIdThenReduceBalance(String id, Double mount);
 }

@@ -24,6 +24,18 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Mono<Account> findByIdThenReduceBalance(String id, Double mount) {
+        return repository.findById(id).flatMap(account -> {
+            var currentBalance = account.getBalance();
+            var updatedBalance = currentBalance - mount;
+            if (updatedBalance < 0) return Mono.error(new Exception("Insufficient balance"));
+
+            account.setBalance(updatedBalance);
+            return repository.save(account);
+        });
+    }
+
+    @Override
     public Mono<Account> findById(String id) {
         return repository.findById(id).single();
     }
@@ -46,4 +58,6 @@ public class AccountServiceImpl implements AccountService {
     public Mono<Void> delete(String id) {
         return repository.deleteById(id);
     }
+
+
 }
