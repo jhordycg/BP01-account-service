@@ -25,6 +25,11 @@ public class AccountController {
                 .mapNotNull(accountFound -> mapper.map(accountFound, AccountDto.class));
     }
 
+    @GetMapping("/{id}")
+    public Mono<AccountDto> findById(@PathVariable String id) {
+        return service.findById(id)
+                .mapNotNull(account -> mapper.map(account, AccountDto.class));
+    }
 
     @PutMapping("/{id}")
     public Mono<AccountDto> findByIdThenAddBalance(

@@ -6,6 +6,7 @@ import reactor.core.publisher.Mono;
 
 public interface AccountService {
     Mono<Account> findByIdThenAddBalance(String id,Double mount);
+    Mono<Account> findById(String id);
     //Mono<Account> reduceBalance(Double mount);
     Flux<Account> findAllByCustomerIdAndProductId(String customerId, String productId);
     Mono<Account> create(Account account);

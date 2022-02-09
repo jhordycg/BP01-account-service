@@ -24,6 +24,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Mono<Account> findById(String id) {
+        return repository.findById(id).single();
+    }
+
+    @Override
     public Flux<Account> findAllByCustomerIdAndProductId(String customerId, String productId) {
         return repository.findAllByCustomerIdAndProductId(customerId, productId);
     }
