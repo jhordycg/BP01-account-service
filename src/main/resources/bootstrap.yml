@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: customer-service
+  cloud:
+    config:
+      enabled: false
+      uri: http://127.0.0.1:8081

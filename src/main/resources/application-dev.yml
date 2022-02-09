@@ -1,0 +1,6 @@
+server:
+  port: 8003
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://bootcamp_p1:f6bhbaptMG1hW4f7@bp01.h31a5.mongodb.net/bp01?retryWrites=true&w=majority
