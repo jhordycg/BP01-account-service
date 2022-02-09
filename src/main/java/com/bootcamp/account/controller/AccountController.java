@@ -25,8 +25,23 @@ public class AccountController {
                 .mapNotNull(accountFound -> mapper.map(accountFound, AccountDto.class));
     }
 
+
+    @PutMapping("/{id}")
+    public Mono<AccountDto> findByIdThenAddBalance(
+            @PathVariable String id,
+            @RequestParam("mount") Double mount
+    ) {
+        return service.findByIdThenAddBalance(id, mount)
+                .mapNotNull(account -> mapper.map(account, AccountDto.class));
+    }
+
     @PostMapping
     public Mono<AccountDto> create(@RequestBody Account account) {
         return service.create(account).mapNotNull(createdAccount -> mapper.map(createdAccount, AccountDto.class));
+    }
+
+    @DeleteMapping("/{id}")
+    public Mono<Void> delete(@PathVariable String id) {
+        return service.delete(id);
     }
 }

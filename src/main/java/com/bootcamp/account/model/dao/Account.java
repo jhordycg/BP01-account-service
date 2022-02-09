@@ -14,7 +14,7 @@ public class Account {
     private String id;
     private String customerId;
     private String productId;
-    private boolean balance;
+    private Double balance;
     private Date enrolled = new Date();
     private Integer movements;
 }

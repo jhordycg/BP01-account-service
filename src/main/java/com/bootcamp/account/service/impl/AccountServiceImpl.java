@@ -15,6 +15,15 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository repository;
 
     @Override
+    public Mono<Account> findByIdThenAddBalance(String id, Double mount) {
+        return repository.findById(id).mapNotNull(account -> {
+            var currentBalance = account.getBalance();
+            account.setBalance(currentBalance + mount);
+            return repository.save(account);
+        }).flatMap(accountMono -> accountMono);
+    }
+
+    @Override
     public Flux<Account> findAllByCustomerIdAndProductId(String customerId, String productId) {
         return repository.findAllByCustomerIdAndProductId(customerId, productId);
     }
@@ -26,5 +35,10 @@ public class AccountServiceImpl implements AccountService {
                     if (!existAccount) return repository.save(account);
                     else return Mono.empty();
                 }).single();
+    }
+
+    @Override
+    public Mono<Void> delete(String id) {
+        return repository.deleteById(id);
     }
 }

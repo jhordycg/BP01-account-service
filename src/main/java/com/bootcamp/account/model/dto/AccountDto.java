@@ -13,7 +13,7 @@ public class AccountDto {
     private String id;
     private String customerId;
     private String productId;
-    private boolean balance;
+    private Double balance;
     private Date enrolled;
     private Integer movements;
 }
